@@ -169,7 +169,7 @@ class Keyboard{
       },
     }, 'special', 'backspace'));
 
-    // Keyboard.keyboard_element.appendChild(br);
+    Keyboard.keyboard_element.appendChild(br.cloneNode());
 
     this.buttons.push(new Button('Tab', 9, {
       en:{
@@ -311,6 +311,369 @@ class Keyboard{
         lowerCase: '\\',
       },
     }));
+
+    Keyboard.keyboard_element.appendChild(br.cloneNode());
+
+    this.buttons.push(new Button('CapsLock', 20, {
+      en:{
+        upperCase: 'CapsLock',
+        lowerCase: 'CapsLock',
+      },
+      ru:{
+        upperCase: 'CapsLock',
+        lowerCase: 'CapsLock',
+      },
+    }, 'special', 'capslock'));
+    this.buttons.push(new Button('KeyA', 65, {
+      en:{
+        upperCase: 'A',
+        lowerCase: 'a',
+      },
+      ru:{
+        upperCase: 'Ф',
+        lowerCase: 'ф',
+      },
+    }));
+    this.buttons.push(new Button('KeyS', 83, {
+      en:{
+        upperCase: 'S',
+        lowerCase: 's',
+      },
+      ru:{
+        upperCase: 'Ы',
+        lowerCase: 'ы',
+      },
+    }));
+    this.buttons.push(new Button('KeyD', 68, {
+      en:{
+        upperCase: 'D',
+        lowerCase: 'd',
+      },
+      ru:{
+        upperCase: 'В',
+        lowerCase: 'в',
+      },
+    }));
+    this.buttons.push(new Button('KeyF', 70, {
+      en:{
+        upperCase: 'F',
+        lowerCase: 'f',
+      },
+      ru:{
+        upperCase: 'А',
+        lowerCase: 'а',
+      },
+    }));
+    this.buttons.push(new Button('KeyG', 71, {
+      en:{
+        upperCase: 'G',
+        lowerCase: 'g',
+      },
+      ru:{
+        upperCase: 'П',
+        lowerCase: 'п',
+      },
+    }));
+    this.buttons.push(new Button('KeyH', 72, {
+      en:{
+        upperCase: 'H',
+        lowerCase: 'h',
+      },
+      ru:{
+        upperCase: 'Р',
+        lowerCase: 'р',
+      },
+    }));
+    this.buttons.push(new Button('KeyJ', 74, {
+      en:{
+        upperCase: 'J',
+        lowerCase: 'j',
+      },
+      ru:{
+        upperCase: 'О',
+        lowerCase: 'о',
+      },
+    }));
+    this.buttons.push(new Button('KeyK', 75, {
+      en:{
+        upperCase: 'K',
+        lowerCase: 'k',
+      },
+      ru:{
+        upperCase: 'Л',
+        lowerCase: 'л',
+      },
+    }));
+    this.buttons.push(new Button('KeyL', 76, {
+      en:{
+        upperCase: 'L',
+        lowerCase: 'l',
+      },
+      ru:{
+        upperCase: 'Д',
+        lowerCase: 'д',
+      },
+    }));
+    this.buttons.push(new Button('Semicolon', 186, {
+      en:{
+        upperCase: ':',
+        lowerCase: ';',
+      },
+      ru:{
+        upperCase: 'Ж',
+        lowerCase: 'ж',
+      },
+    }));
+    this.buttons.push(new Button('Quote', 222, {
+      en:{
+        upperCase: '"',
+        lowerCase: '\'',
+      },
+      ru:{
+        upperCase: 'Э',
+        lowerCase: 'э',
+      },
+    }));
+    this.buttons.push(new Button('Enter', 13, {
+      en:{
+        upperCase: 'Enter',
+        lowerCase: 'Enter',
+      },
+      ru:{
+        upperCase: 'Enter',
+        lowerCase: 'Enter',
+      },
+    }, 'special', 'enter'));
+
+    Keyboard.keyboard_element.appendChild(br.cloneNode());
+
+    this.buttons.push(new Button('ShiftLeft', 16, {
+      en:{
+        upperCase: 'Shift',
+        lowerCase: 'Shift',
+      },
+      ru:{
+        upperCase: 'Shift',
+        lowerCase: 'Shift',
+      },
+    }, 'special', 'shift'));
+    this.buttons.push(new Button('KeyZ', 90, {
+      en:{
+        upperCase: 'Z',
+        lowerCase: 'z',
+      },
+      ru:{
+        upperCase: 'Я',
+        lowerCase: 'я',
+      },
+    }));
+    this.buttons.push(new Button('KeyX', 88, {
+      en:{
+        upperCase: 'X',
+        lowerCase: 'x',
+      },
+      ru:{
+        upperCase: 'Ч',
+        lowerCase: 'ч',
+      },
+    }));
+    this.buttons.push(new Button('KeyC', 67, {
+      en:{
+        upperCase: 'C',
+        lowerCase: 'c',
+      },
+      ru:{
+        upperCase: 'С',
+        lowerCase: 'с',
+      },
+    }));
+    this.buttons.push(new Button('KeyV', 86, {
+      en:{
+        upperCase: 'V',
+        lowerCase: 'v',
+      },
+      ru:{
+        upperCase: 'М',
+        lowerCase: 'м',
+      },
+    }));
+    this.buttons.push(new Button('KeyB', 66, {
+      en:{
+        upperCase: 'B',
+        lowerCase: 'b',
+      },
+      ru:{
+        upperCase: 'И',
+        lowerCase: 'и',
+      },
+    }));
+    this.buttons.push(new Button('KeyN', 78, {
+      en:{
+        upperCase: 'N',
+        lowerCase: 'n',
+      },
+      ru:{
+        upperCase: 'Т',
+        lowerCase: 'т',
+      },
+    }));
+    this.buttons.push(new Button('KeyM', 77, {
+      en:{
+        upperCase: 'M',
+        lowerCase: 'm',
+      },
+      ru:{
+        upperCase: 'Ь',
+        lowerCase: 'ь',
+      },
+    }));
+    this.buttons.push(new Button('Comma', 188, {
+      en:{
+        upperCase: '<',
+        lowerCase: ',',
+      },
+      ru:{
+        upperCase: 'Б',
+        lowerCase: 'б',
+      },
+    }));
+    this.buttons.push(new Button('Period', 190, {
+      en:{
+        upperCase: '>',
+        lowerCase: '.',
+      },
+      ru:{
+        upperCase: 'Ю',
+        lowerCase: 'ю',
+      },
+    }));
+    this.buttons.push(new Button('Slash', 191, {
+      en:{
+        upperCase: '?',
+        lowerCase: '/',
+      },
+      ru:{
+        upperCase: ',',
+        lowerCase: '.',
+      },
+    }));
+    this.buttons.push(new Button('ArrowUp', 38, {
+      en:{
+        upperCase: '↑',
+        lowerCase: '↑',
+      },
+      ru:{
+        upperCase: '↑',
+        lowerCase: '↑',
+      },
+    }, 'special', 'arrow'));
+    this.buttons.push(new Button('ShiftRight', 16, {
+      en:{
+        upperCase: 'Shift',
+        lowerCase: 'Shift',
+      },
+      ru:{
+        upperCase: 'Shift',
+        lowerCase: 'Shift',
+      },
+    }, 'special', 'shift'));
+
+    Keyboard.keyboard_element.appendChild(br);    
+
+
+    this.buttons.push(new Button('ControlLeft', 17, {
+      en:{
+        upperCase: 'Ctrl',
+        lowerCase: 'Ctrl',
+      },
+      ru:{
+        upperCase: 'Ctrl',
+        lowerCase: 'Ctrl',
+      },
+    }, 'special', 'control'));
+    this.buttons.push(new Button('MetaLeft', 91, {
+      en:{
+        upperCase: 'Win',
+        lowerCase: 'Win',
+      },
+      ru:{
+        upperCase: 'Win',
+        lowerCase: 'Win',
+      },
+    }, 'special', 'win'));
+    this.buttons.push(new Button('AltLeft', 18, {
+      en:{
+        upperCase: 'Alt',
+        lowerCase: 'Alt',
+      },
+      ru:{
+        upperCase: 'Alt',
+        lowerCase: 'Alt',
+      },
+    }, 'special', 'alt'));
+    this.buttons.push(new Button('Space', 32, {
+      en:{
+        upperCase: '_',
+        lowerCase: '_',
+      },
+      ru:{
+        upperCase: '_',
+        lowerCase: '_',
+      },
+    }, 'special', 'space'));
+    this.buttons.push(new Button('AltRight', 18, {
+      en:{
+        upperCase: 'Alt',
+        lowerCase: 'Alt',
+      },
+      ru:{
+        upperCase: 'Alt',
+        lowerCase: 'Alt',
+      },
+    }, 'special', 'alt'));
+    this.buttons.push(new Button('ControlRight', 17, {
+      en:{
+        upperCase: 'Ctrl',
+        lowerCase: 'Ctrl',
+      },
+      ru:{
+        upperCase: 'Ctrl',
+        lowerCase: 'Ctrl',
+      },
+    }, 'special', 'control'));
+    this.buttons.push(new Button('ArrowLeft', 37, {
+      en:{
+        upperCase: '←',
+        lowerCase: '←',
+      },
+      ru:{
+        upperCase: '←',
+        lowerCase: '←',
+      },
+    }, 'special', 'arrow'));
+    this.buttons.push(new Button('ArrowDown', 40, {
+      en:{
+        lowerCase: '↓',
+        upperCase: '↓',
+      },
+      ru:{
+        upperCase: '↓',
+        lowerCase: '↓',
+      },
+    }, 'special', 'arrow'));
+    this.buttons.push(new Button('ArrowDown', 39, {
+      en:{
+        lowerCase: '→',
+        upperCase: '→',
+      },
+      ru:{
+        upperCase: '→',
+        lowerCase: '→',
+      },
+    }, 'special', 'arrow'));
+
+
+
 
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
