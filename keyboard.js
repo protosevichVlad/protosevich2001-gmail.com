@@ -5,6 +5,7 @@ export default class Keyboard {
     this.delay = 100;
     this.lang = 'en';
     this.case = 'lowerCase';
+    this.isCaps = false;
     this.special_keys_pressed = [];
     this.buttons = [];
 
@@ -14,15 +15,15 @@ export default class Keyboard {
     document.body.appendChild(wrapper);
 
     this.textarea = document.createElement('textarea');
-    this.textarea.id = 'textarea';
+    this.textarea.id = 'textarea';  
     wrapper.appendChild(this.textarea);
     this.textarea.selectionStart = 0;
 
     // creating buttons
-    this.keyboard_element = document.createElement('div');
-    this.keyboard_element.classList.add('keyboard');
-    this.keyboard_element.id = 'keyboard';
-    wrapper.appendChild(this.keyboard_element);
+    this.keyboardElement = document.createElement('div');
+    this.keyboardElement.classList.add('keyboard');
+    this.keyboardElement.id = 'keyboard';
+    wrapper.appendChild(this.keyboardElement);
 
 
     const br = document.createElement('br');
@@ -169,7 +170,7 @@ export default class Keyboard {
       },
     }, 'special', 'backspace'));
 
-    this.keyboard_element.appendChild(br.cloneNode());
+    this.keyboardElement.appendChild(br.cloneNode());
 
     this.buttons.push(new Button(this, 'Tab', 9, {
       en: {
@@ -322,7 +323,7 @@ export default class Keyboard {
       },
     }, 'special', 'delete'));
 
-    this.keyboard_element.appendChild(br.cloneNode());
+    this.keyboardElement.appendChild(br.cloneNode());
 
     this.buttons.push(new Button(this, 'CapsLock', 20, {
       en: {
@@ -455,7 +456,7 @@ export default class Keyboard {
       },
     }, 'special', 'enter'));
 
-    this.keyboard_element.appendChild(br.cloneNode());
+    this.keyboardElement.appendChild(br.cloneNode());
 
     this.buttons.push(new Button(this, 'ShiftLeft', 16, {
       en: {
@@ -588,7 +589,7 @@ export default class Keyboard {
       },
     }, 'special', 'shift'));
 
-    this.keyboard_element.appendChild(br);
+    this.keyboardElement.appendChild(br);
 
 
     this.buttons.push(new Button(this, 'ControlLeft', 17, {
@@ -688,6 +689,28 @@ export default class Keyboard {
 
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
+    window.addEventListener('click', (event) => this.textarea.focus());
+  }
+
+  pressCapsLock(){
+    this.isCaps = !this.isCaps;
+    if (this.isCaps) {
+      this.buttons.forEach((button) => {
+        if (!button.elementInHtml.classList.contains('special')) {
+          button.dict[this.lang]['lowerCase'] = button.dict[this.lang]['lowerCase'].toUpperCase();
+          button.dict[this.lang]['upperCase'] = button.dict[this.lang]['upperCase'].toLowerCase();
+          button.update();
+        }
+      });
+    } else {
+      this.buttons.forEach((button) => {
+        if (!button.elementInHtml.classList.contains('special')) {
+          button.dict[this.lang]['lowerCase'] = button.dict[this.lang]['lowerCase'].toLowerCase();
+          button.dict[this.lang]['upperCase'] = button.dict[this.lang]['upperCase'].toUpperCase();
+          button.update();
+        }
+      });
+    }
   }
 
   onKeyDown(event) {
@@ -696,6 +719,7 @@ export default class Keyboard {
         button.onMouseDown();
       }
     });
+    // event.preventDefault();
   }
 
   onKeyUp(event) {
@@ -704,6 +728,7 @@ export default class Keyboard {
         button.onMouseUp();
       }
     });
+    // event.preventDefault();
   }
 
   updateButtons() {

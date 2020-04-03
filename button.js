@@ -5,34 +5,36 @@ export default class Button {
     this.keyCode = keyCode;
     this.code = code;
 
-    this.element_in_html = document.createElement('div');
-    this.element_in_html.innerHTML = dict[this.keyboard.lang][this.keyboard.case];
-    this.element_in_html.addEventListener('mousedown', this.onMouseDown.bind(this));
-    this.element_in_html.addEventListener('mouseup', this.onMouseUp.bind(this));
-    this.element_in_html.addEventListener('mouseleave', this.onMouseUp.bind(this));
-    this.element_in_html.addEventListener('mouseenter', this.onMouseDownEnter.bind(this));
+    this.elementInHtml = document.createElement('div');
+    this.elementInHtml.innerHTML = dict[this.keyboard.lang][this.keyboard.case];
+    this.elementInHtml.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.elementInHtml.addEventListener('mouseup', this.onMouseUp.bind(this));
+    this.elementInHtml.addEventListener('mouseleave', this.onMouseUp.bind(this));
+    this.elementInHtml.addEventListener('mouseenter', this.onMouseDownEnter.bind(this));
 
-    this.element_in_html.classList = ['button'];
-    if (classButton !== undefined) this.element_in_html.classList.add(...classButton);
-    this.keyboard.keyboard_element.appendChild(this.element_in_html);
+    this.elementInHtml.classList = ['button'];
+    if (classButton !== undefined) this.elementInHtml.classList.add(...classButton);
+    this.keyboard.keyboardElement.appendChild(this.elementInHtml);
   }
 
   update() {
-    this.element_in_html.innerHTML = this.dict[this.keyboard.lang][this.keyboard.case];
+    this.elementInHtml.innerHTML = this.dict[this.keyboard.lang][this.keyboard.case];
   }
 
   onMouseUp() {
-    this.element_in_html.classList.remove('active');
+    if (!(this.keyboard.isCaps && this.keyCode === 20)){
+      this.elementInHtml.classList.remove('active');
+    }
 
-    if (this.keyCode === 17) {
+    if (this.keyCode === 17) {  //Control
       this.keyboard.special_keys_pressed = this.keyboard.special_keys_pressed.filter(
         (elem) => elem !== 'Control',
       );
-    } else if (this.keyCode === 18) {
+    } else if (this.keyCode === 18) { //Alt
       this.keyboard.special_keys_pressed = this.keyboard.special_keys_pressed.filter(
         (elem) => elem !== 'Alt',
       );
-    } else if (this.keyCode === 16) {
+    } else if (this.keyCode === 16) { //Shift
       this.keyboard.special_keys_pressed = this.keyboard.special_keys_pressed.filter(
         (elem) => elem !== 'Shift',
       );
@@ -42,13 +44,13 @@ export default class Button {
   }
 
   onMouseDown() {
-    this.element_in_html.classList.add('active');
+    this.elementInHtml.classList.add('active');
     this.writeInTextArea();
   }
 
   onMouseDownEnter(event) {
     if (event.buttons === 1) {
-      this.element_in_html.classList.add('active');
+      this.elementInHtml.classList.add('active');
       this.writeInTextArea();
     }
   }
@@ -60,14 +62,21 @@ export default class Button {
 
     const { value } = textarea;
 
-    if (this.keyCode === 17) {
+    if (this.keyCode === 17) { // Control 
       this.keyboard.special_keys_pressed.push('Control');
-    } else if (this.keyCode === 18) {
+    } else if (this.keyCode === 18) { // Alt
       this.keyboard.special_keys_pressed.push('Alt');
-    } else if (this.keyCode === 16) {
+    } else if (this.keyCode === 16) { // Shift
       this.keyboard.special_keys_pressed.push('Shift');
       this.keyboard.case = 'upperCase';
       this.keyboard.updateButtons();
+    } else if (this.keyCode === 20) { // CapsLock
+      this.keyboard.pressCapsLock();
+    } else if (this.keyCode === 9) { // Tab
+      textarea.value = value.slice(0, textarea.selectionStart) + '\t' +
+                         + value.slice(textarea.selectionEnd, value.length);
+      textarea.selectionStart = cursorPositionStart + '\t'.length;
+      textarea.selectionEnd = cursorPositionStart + '\t'.length;
     } else if (this.keyCode === 8) { // Backspace
       if (cursorPositionEnd - cursorPositionStart > 0) {
         textarea.value = value.slice(0, textarea.selectionStart)
@@ -76,7 +85,7 @@ export default class Button {
         textarea.selectionEnd = cursorPositionStart;
       } else if (cursorPositionStart > 0) {
         textarea.value = value.slice(0, textarea.selectionStart - 1)
-                         + value.slice(textarea.selectionEnd, value.length);
+                        + value.slice(textarea.selectionEnd, value.length);
         textarea.selectionStart = cursorPositionStart - 1;
         textarea.selectionEnd = cursorPositionStart - 1;
       }
