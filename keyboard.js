@@ -6,7 +6,7 @@ export default class Keyboard {
     this.lang = 'en';
     this.case = 'lowerCase';
     this.isCaps = false;
-    this.special_keys_pressed = [];
+    this.specialKeysPressed = [];
     this.buttons = [];
 
     // creating textarea
