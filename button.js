@@ -7,14 +7,12 @@ export default class Button {
 
     this.elementInHtml = document.createElement('div');
     this.elementInHtml.innerHTML = dict[this.keyboard.lang][this.keyboard.case];
-    this.elementInHtml.addEventListener('mousedown', this.onMouseDown.bind(this));
-    this.elementInHtml.addEventListener('mouseup', this.onMouseUp.bind(this));
-    this.elementInHtml.addEventListener('mouseleave', this.onMouseUp.bind(this));
-    this.elementInHtml.addEventListener('mouseenter', this.onMouseDownEnter.bind(this));
-
+    
     this.elementInHtml.classList = ['button'];
     if (classButton !== undefined) this.elementInHtml.classList.add(...classButton);
     this.keyboard.keyboardElement.appendChild(this.elementInHtml);
+
+    this.elementInHtml.addEventListener('mousedown', this.onMouseDown.bind(this));
   }
 
   update() {
@@ -22,37 +20,31 @@ export default class Button {
   }
 
   onMouseUp() {
-    if (!(this.keyboard.isCaps && this.keyCode === 20)){
+    console.log(this);
+    if (!(this.keyboard.isCaps && this.keyCode === 20)) {
       this.elementInHtml.classList.remove('active');
     }
 
-    if (this.keyCode === 17) {  //Control
+    if (this.keyCode === 17) { // Control
       this.keyboard.specialKeysPressed = this.keyboard.specialKeysPressed.filter(
         (elem) => elem !== 'Control',
       );
-    } else if (this.keyCode === 18) { //Alt
+    } else if (this.keyCode === 18) { // Alt
       this.keyboard.specialKeysPressed = this.keyboard.specialKeysPressed.filter(
         (elem) => elem !== 'Alt',
       );
-    } else if (this.keyCode === 16) { //Shift
+    } else if (this.keyCode === 16) { // Shift
       this.keyboard.specialKeysPressed = this.keyboard.specialKeysPressed.filter(
         (elem) => elem !== 'Shift',
       );
       this.keyboard.case = 'lowerCase';
       this.keyboard.updateButtons();
-    } 
+    }
   }
 
   onMouseDown() {
-    this.elementInHtml.classList.add('active');
+    this.elementInHtml.classList.add('active');    
     this.writeInTextArea();
-  }
-
-  onMouseDownEnter(event) {
-    if (event.buttons === 1) {
-      this.elementInHtml.classList.add('active');
-      this.writeInTextArea();
-    }
   }
 
   writeInTextArea() {
@@ -63,7 +55,7 @@ export default class Button {
     const { value } = textarea;
 
 
-    switch (this.keyCode){
+    switch (this.keyCode) {
       case 17: // Control
         this.keyboard.specialKeysPressed.push('Control');
         if (this.keyboard.specialKeysPressed.indexOf('Alt') !== -1) {
@@ -99,8 +91,8 @@ export default class Button {
         break;
 
       case 9: // Tab
-        textarea.value = value.slice(0, textarea.selectionStart) + '\t' +
-                       + value.slice(textarea.selectionEnd, value.length);
+        textarea.value = `${value.slice(0, textarea.selectionStart)}\t${
+          +value.slice(textarea.selectionEnd, value.length)}`;
         textarea.selectionStart = cursorPositionStart + '\t'.length;
         textarea.selectionEnd = cursorPositionStart + '\t'.length;
         break;
@@ -113,20 +105,28 @@ export default class Button {
           textarea.selectionEnd = cursorPositionStart;
         } else if (this.keyboard.specialKeysPressed.indexOf('Control') !== -1) {
           let newCursorPositionStart = value.lastIndexOf(' ', cursorPositionStart);
-          newCursorPositionStart = (newCursorPositionStart == -1) ? 0: newCursorPositionStart;
+          newCursorPositionStart = (newCursorPositionStart == -1) ? 0 : newCursorPositionStart;
           textarea.value = value.slice(0, newCursorPositionStart)
                           + value.slice(textarea.selectionEnd, value.length);
           textarea.selectionStart = newCursorPositionStart;
           textarea.selectionEnd = newCursorPositionStart;
-        }else if (cursorPositionStart > 0) {
+        } else if (cursorPositionStart > 0) {
           textarea.value = value.slice(0, textarea.selectionStart - 1)
                           + value.slice(textarea.selectionEnd, value.length);
           textarea.selectionStart = cursorPositionStart - 1;
           textarea.selectionEnd = cursorPositionStart - 1;
-        } 
+        }
         break;
-      
+
       case 91: // Win
+        break;
+
+      case 13: // Enter
+        textarea.value = value.slice(0, cursorPositionStart)
+                        + '\r\n' +
+                        + value.slice(cursorPositionEnd, value.length);
+        textarea.selectionStart = cursorPositionStart + 1;
+        textarea.selectionEnd = cursorPositionStart + 1;
         break;
 
       case 46: // Delete
@@ -145,15 +145,19 @@ export default class Button {
 
       case 37: // ArrowLeft
         if (cursorPositionStart > 0) {
-          textarea.selectionStart = cursorPositionStart - ((cursorPositionEnd - cursorPositionStart) ? 0: 1);
-          textarea.selectionEnd = cursorPositionStart - ((cursorPositionEnd - cursorPositionStart) ? 0: 1);
+          let temp = 1;
+          if (cursorPositionEnd - cursorPositionStart) temp = 0;
+          textarea.selectionStart = cursorPositionStart - temp;
+          textarea.selectionEnd = cursorPositionStart - temp;
         }
         break;
 
       case 39: // ArrowRigth
         if (cursorPositionEnd < value.length) {
-          textarea.selectionStart = cursorPositionEnd + ((cursorPositionEnd - cursorPositionStart) ? 0: 1);
-          textarea.selectionEnd = cursorPositionEnd + ((cursorPositionEnd - cursorPositionStart) ? 0: 1);
+          let temp = 1;
+          if (cursorPositionEnd - cursorPositionStart) temp = 0;
+          textarea.selectionStart = cursorPositionEnd + temp;
+          textarea.selectionEnd = cursorPositionEnd + temp;
         }
         break;
 

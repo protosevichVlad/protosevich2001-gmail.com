@@ -15,8 +15,9 @@ export default class Keyboard {
     document.body.appendChild(wrapper);
 
     this.textarea = document.createElement('textarea');
-    this.textarea.id = 'textarea';  
+    this.textarea.id = 'textarea';
     wrapper.appendChild(this.textarea);
+    this.textarea.focus();
     this.textarea.selectionStart = 0;
 
     // creating buttons
@@ -689,24 +690,25 @@ export default class Keyboard {
 
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
-    window.addEventListener('click', (event) => this.textarea.focus());
+    window.addEventListener('mouseup', this.onKeyUp.bind(this));
+    window.addEventListener('click', () => this.textarea.focus());
   }
 
-  pressCapsLock(){
+  pressCapsLock() {
     this.isCaps = !this.isCaps;
     if (this.isCaps) {
       this.buttons.forEach((button) => {
         if (!button.elementInHtml.classList.contains('special')) {
-          button.dict[this.lang]['lowerCase'] = button.dict[this.lang]['lowerCase'].toUpperCase();
-          button.dict[this.lang]['upperCase'] = button.dict[this.lang]['upperCase'].toLowerCase();
+          button.dict[this.lang].lowerCase = button.dict[this.lang].lowerCase.toUpperCase();
+          button.dict[this.lang].upperCase = button.dict[this.lang].upperCase.toLowerCase();
           button.update();
         }
       });
     } else {
       this.buttons.forEach((button) => {
         if (!button.elementInHtml.classList.contains('special')) {
-          button.dict[this.lang]['lowerCase'] = button.dict[this.lang]['lowerCase'].toLowerCase();
-          button.dict[this.lang]['upperCase'] = button.dict[this.lang]['upperCase'].toUpperCase();
+          button.dict[this.lang].lowerCase = button.dict[this.lang].lowerCase.toLowerCase();
+          button.dict[this.lang].upperCase = button.dict[this.lang].upperCase.toUpperCase();
           button.update();
         }
       });
@@ -719,16 +721,16 @@ export default class Keyboard {
         button.onMouseDown();
       }
     });
-    // event.preventDefault();
+    event.preventDefault();
   }
 
   onKeyUp(event) {
     this.buttons.forEach((button) => {
-      if (button.code === event.code) {
+      if (button.elementInHtml.classList.contains('active')) {
         button.onMouseUp();
       }
     });
-    // event.preventDefault();
+    event.preventDefault();
   }
 
   updateButtons() {
