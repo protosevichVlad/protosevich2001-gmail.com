@@ -20,7 +20,6 @@ export default class Button {
   }
 
   onMouseUp() {
-    console.log(this);
     if (!(this.keyboard.isCaps && this.keyCode === 20)) {
       this.elementInHtml.classList.remove('active');
     }
@@ -123,8 +122,8 @@ export default class Button {
 
       case 13: // Enter
         textarea.value = value.slice(0, cursorPositionStart)
-                        + '\r\n' +
-                        + value.slice(cursorPositionEnd, value.length);
+                        + '\n'
+                        + value.slice(textarea.selectionEnd, value.length);
         textarea.selectionStart = cursorPositionStart + 1;
         textarea.selectionEnd = cursorPositionStart + 1;
         break;
