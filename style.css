@@ -1,8 +1,5 @@
 body{
   background-color: #d9801b;
-
-  perspective: 700px;
-
 }
 
 .wrapper{
@@ -13,6 +10,8 @@ body{
   flex-direction: column;
   justify-content: center;
   align-content: center;
+  perspective: 700px;
+  z-index: -1;
 }
 
 textarea {
@@ -30,7 +29,6 @@ textarea {
 
   padding: 5px;
 
-  perspective: 700px;
   transform: rotateX(15deg);
 
 
@@ -44,6 +42,8 @@ textarea {
 }
 
 .button{
+  position: relative;
+
   width: 50px;
   height: 50px;
   margin: 2px;
@@ -67,7 +67,7 @@ textarea {
   font-size: 20px;
 
   transform: top 0.5s easy;
-  z-index: 10;
+  z-index: 2;
 }
 
 .special {
@@ -103,5 +103,5 @@ textarea {
 .active{
   position: relative;
   top: 7px;
-  z-index: -1;
+  z-index: 1;
 }

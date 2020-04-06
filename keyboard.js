@@ -2,12 +2,17 @@ import Button from './button.js';
 
 export default class Keyboard {
   constructor() {
-    this.delay = 100;
-    this.lang = 'en';
     this.case = 'lowerCase';
     this.isCaps = false;
     this.specialKeysPressed = [];
     this.buttons = [];
+
+    if (window.localStorage.getItem('lang')){
+      this.lang = window.localStorage.getItem('lang');
+    } else {
+      this.lang = 'en';
+      window.localStorage.setItem('lang', this.lang);
+    }
 
     // creating textarea
     const wrapper = document.createElement('div');
@@ -25,6 +30,10 @@ export default class Keyboard {
     this.keyboardElement.classList.add('keyboard');
     this.keyboardElement.id = 'keyboard';
     wrapper.appendChild(this.keyboardElement);
+    
+    const elementP = document.createElement('p');
+    elementP.innerText = 'Смена языка ввода - \'Ctrl\' + \'Alt\' \n Сделано в ОС Windows'
+    wrapper.appendChild(elementP);
 
 
     const br = document.createElement('br');
@@ -688,9 +697,10 @@ export default class Keyboard {
       event.preventDefault();
     });
 
+    
+
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
-    window.addEventListener('mouseup', this.onKeyUp.bind(this));
     window.addEventListener('click', () => this.textarea.focus());
   }
 
@@ -726,7 +736,7 @@ export default class Keyboard {
 
   onKeyUp(event) {
     this.buttons.forEach((button) => {
-      if (button.elementInHtml.classList.contains('active')) {
+      if (event.code === button.code) {
         button.onMouseUp();
       }
     });
@@ -737,5 +747,15 @@ export default class Keyboard {
     this.buttons.forEach((button) => {
       button.update();
     });
+  }
+
+  changeLanguage() {
+    if (this.lang === 'en') {
+      this.lang = 'ru';
+    } else {
+      this.lang = 'en';
+    }
+    window.localStorage.setItem('lang', this.lang);
+    this.updateButtons();
   }
 }

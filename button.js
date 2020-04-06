@@ -13,6 +13,9 @@ export default class Button {
     this.keyboard.keyboardElement.appendChild(this.elementInHtml);
 
     this.elementInHtml.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.elementInHtml.addEventListener('mouseup', this.onMouseUp.bind(this));
+    // this.elementInHtml.addEventListener('mouseout', this.onMouseUp.bind(this));
+
   }
 
   update() {
@@ -20,6 +23,8 @@ export default class Button {
   }
 
   onMouseUp() {
+    console.log('MouseUp', this.elementInHtml.classList);
+    
     if (!(this.keyboard.isCaps && this.keyCode === 20)) {
       this.elementInHtml.classList.remove('active');
     }
@@ -42,7 +47,10 @@ export default class Button {
   }
 
   onMouseDown() {
-    this.elementInHtml.classList.add('active');    
+    console.log('MouseDown', this.elementInHtml.classList);
+
+    this.elementInHtml.classList.add('active');  
+    console.log('down');  
     this.writeInTextArea();
   }
 
@@ -58,24 +66,14 @@ export default class Button {
       case 17: // Control
         this.keyboard.specialKeysPressed.push('Control');
         if (this.keyboard.specialKeysPressed.indexOf('Alt') !== -1) {
-          if (this.keyboard.lang === 'en') {
-            this.keyboard.lang = 'ru';
-          } else {
-            this.keyboard.lang = 'en';
-          }
-          this.keyboard.updateButtons();
+          this.keyboard.changeLanguage()
         }
         break;
 
       case 18: // Alt
         this.keyboard.specialKeysPressed.push('Alt');
         if (this.keyboard.specialKeysPressed.indexOf('Control') !== -1) {
-          if (this.keyboard.lang === 'en') {
-            this.keyboard.lang = 'ru';
-          } else {
-            this.keyboard.lang = 'en';
-          }
-          this.keyboard.updateButtons();
+          this.keyboard.changeLanguage()
         }
         break;
 
