@@ -1,45 +1,36 @@
 import Button from './button.js';
 
 export default class Keyboard {
-  constructor() {
+  constructor(wrapper) {
     this.case = 'lowerCase';
     this.isCaps = false;
     this.specialKeysPressed = [];
-    this.buttons = [];
+    this.buttons = {};
 
-    if (window.localStorage.getItem('lang')){
+    if (window.localStorage.getItem('lang')) {
       this.lang = window.localStorage.getItem('lang');
     } else {
       this.lang = 'en';
       window.localStorage.setItem('lang', this.lang);
     }
+    this.wrapper = wrapper;
+  }
 
-    // creating textarea
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('wrapper');
-    document.body.appendChild(wrapper);
-
-    this.textarea = document.createElement('textarea');
-    this.textarea.id = 'textarea';
-    wrapper.appendChild(this.textarea);
-    this.textarea.focus();
-    this.textarea.selectionStart = 0;
-
-    // creating buttons
+  init() {
     this.keyboardElement = document.createElement('div');
     this.keyboardElement.classList.add('keyboard');
     this.keyboardElement.id = 'keyboard';
-    wrapper.appendChild(this.keyboardElement);
-    
+    this.wrapper.appendChild(this.keyboardElement);
+
     const elementP = document.createElement('p');
-    elementP.innerText = 'Смена языка ввода - \'Ctrl\' + \'Alt\' \n Сделано в ОС Windows'
-    wrapper.appendChild(elementP);
+    elementP.innerText = 'Смена языка ввода - \'Ctrl\' + \'Alt\' \n Сделано в ОС Windows';
+    this.wrapper.appendChild(elementP);
 
 
     const br = document.createElement('br');
 
     // add buttons
-    this.buttons.push(new Button(this, 'Backquote', 192, {
+    this.buttons.Backquote = new Button(this, 'Backquote', 192, {
       en: {
         upperCase: '~',
         lowerCase: '`',
@@ -48,8 +39,8 @@ export default class Keyboard {
         upperCase: 'Ё',
         lowerCase: 'ё',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit1', 49, {
+    });
+    this.buttons.Digit1 = new Button(this, 'Digit1', 49, {
       en: {
         upperCase: '!',
         lowerCase: '1',
@@ -58,8 +49,8 @@ export default class Keyboard {
         upperCase: '!',
         lowerCase: '1',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit2', 50, {
+    });
+    this.buttons.Digit2 = new Button(this, 'Digit2', 50, {
       en: {
         upperCase: '@',
         lowerCase: '2',
@@ -68,8 +59,8 @@ export default class Keyboard {
         upperCase: '"',
         lowerCase: '2',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit3', 51, {
+    });
+    this.buttons.Digit3 = new Button(this, 'Digit3', 51, {
       en: {
         upperCase: '#',
         lowerCase: '3',
@@ -78,8 +69,8 @@ export default class Keyboard {
         upperCase: '№',
         lowerCase: '3',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit4', 52, {
+    });
+    this.buttons.Digit4 = new Button(this, 'Digit4', 52, {
       en: {
         upperCase: '$',
         lowerCase: '4',
@@ -88,8 +79,8 @@ export default class Keyboard {
         upperCase: ';',
         lowerCase: '4',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit5', 53, {
+    });
+    this.buttons.Digit5 = new Button(this, 'Digit5', 53, {
       en: {
         upperCase: '%',
         lowerCase: '5',
@@ -98,8 +89,8 @@ export default class Keyboard {
         upperCase: '%',
         lowerCase: '5',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit6', 54, {
+    });
+    this.buttons.Digit6 = new Button(this, 'Digit6', 54, {
       en: {
         upperCase: '^',
         lowerCase: '6',
@@ -108,8 +99,8 @@ export default class Keyboard {
         upperCase: ':',
         lowerCase: '6',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit7', 55, {
+    });
+    this.buttons.Digit7 = new Button(this, 'Digit7', 55, {
       en: {
         upperCase: '&',
         lowerCase: '7',
@@ -118,8 +109,8 @@ export default class Keyboard {
         upperCase: '?',
         lowerCase: '7',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit8', 56, {
+    });
+    this.buttons.Digit8 = new Button(this, 'Digit8', 56, {
       en: {
         upperCase: '*',
         lowerCase: '8',
@@ -128,8 +119,8 @@ export default class Keyboard {
         upperCase: '*',
         lowerCase: '8',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit9', 57, {
+    });
+    this.buttons.Digit9 = new Button(this, 'Digit9', 57, {
       en: {
         upperCase: '(',
         lowerCase: '9',
@@ -138,8 +129,8 @@ export default class Keyboard {
         upperCase: '(',
         lowerCase: '9',
       },
-    }));
-    this.buttons.push(new Button(this, 'Digit0', 48, {
+    });
+    this.buttons.Digit0 = new Button(this, 'Digit0', 48, {
       en: {
         upperCase: ')',
         lowerCase: '0',
@@ -148,8 +139,8 @@ export default class Keyboard {
         upperCase: ')',
         lowerCase: '0',
       },
-    }));
-    this.buttons.push(new Button(this, 'Minus', 189, {
+    });
+    this.buttons.Minus = new Button(this, 'Minus', 189, {
       en: {
         upperCase: '_',
         lowerCase: '-',
@@ -158,8 +149,8 @@ export default class Keyboard {
         upperCase: '_',
         lowerCase: '-',
       },
-    }));
-    this.buttons.push(new Button(this, 'Equal', 187, {
+    });
+    this.buttons.Equal = new Button(this, 'Equal', 187, {
       en: {
         upperCase: '+',
         lowerCase: '=',
@@ -168,8 +159,8 @@ export default class Keyboard {
         upperCase: '+',
         lowerCase: '=',
       },
-    }));
-    this.buttons.push(new Button(this, 'Backspace', 8, {
+    });
+    this.buttons.Backspace = new Button(this, 'Backspace', 8, {
       en: {
         upperCase: 'Backspace',
         lowerCase: 'Backspace',
@@ -178,11 +169,11 @@ export default class Keyboard {
         upperCase: 'Backspace',
         lowerCase: 'Backspace',
       },
-    }, 'special', 'backspace'));
+    }, 'special', 'backspace');
 
     this.keyboardElement.appendChild(br.cloneNode());
 
-    this.buttons.push(new Button(this, 'Tab', 9, {
+    this.buttons.Tab = new Button(this, 'Tab', 9, {
       en: {
         upperCase: 'Tab',
         lowerCase: 'Tab',
@@ -191,8 +182,8 @@ export default class Keyboard {
         upperCase: 'Tab',
         lowerCase: 'Tab',
       },
-    }, 'special', 'tab'));
-    this.buttons.push(new Button(this, 'KeyQ', 81, {
+    }, 'special', 'tab');
+    this.buttons.KeyQ = new Button(this, 'KeyQ', 81, {
       en: {
         upperCase: 'Q',
         lowerCase: 'q',
@@ -201,8 +192,8 @@ export default class Keyboard {
         upperCase: 'Й',
         lowerCase: 'й',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyW', 87, {
+    });
+    this.buttons.KeyW = new Button(this, 'KeyW', 87, {
       en: {
         upperCase: 'W',
         lowerCase: 'w',
@@ -211,8 +202,8 @@ export default class Keyboard {
         upperCase: 'Ц',
         lowerCase: 'ц',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyE', 69, {
+    });
+    this.buttons.KeyE = new Button(this, 'KeyE', 69, {
       en: {
         upperCase: 'E',
         lowerCase: 'e',
@@ -221,8 +212,8 @@ export default class Keyboard {
         upperCase: 'У',
         lowerCase: 'у',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyR', 82, {
+    });
+    this.buttons.KeyR = new Button(this, 'KeyR', 82, {
       en: {
         upperCase: 'R',
         lowerCase: 'r',
@@ -231,8 +222,8 @@ export default class Keyboard {
         upperCase: 'К',
         lowerCase: 'к',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyT', 69, {
+    });
+    this.buttons.KeyT = new Button(this, 'KeyT', 69, {
       en: {
         upperCase: 'T',
         lowerCase: 't',
@@ -241,8 +232,8 @@ export default class Keyboard {
         upperCase: 'Е',
         lowerCase: 'е',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyY', 89, {
+    });
+    this.buttons.KeyY = new Button(this, 'KeyY', 89, {
       en: {
         upperCase: 'Y',
         lowerCase: 'y',
@@ -251,8 +242,8 @@ export default class Keyboard {
         upperCase: 'Н',
         lowerCase: 'н',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyU', 85, {
+    });
+    this.buttons.KeyU = new Button(this, 'KeyU', 85, {
       en: {
         upperCase: 'U',
         lowerCase: 'u',
@@ -261,8 +252,8 @@ export default class Keyboard {
         upperCase: 'Г',
         lowerCase: 'г',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyI', 73, {
+    });
+    this.buttons.KeyI = new Button(this, 'KeyI', 73, {
       en: {
         upperCase: 'I',
         lowerCase: 'i',
@@ -271,8 +262,8 @@ export default class Keyboard {
         upperCase: 'Ш',
         lowerCase: 'ш',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyO', 79, {
+    });
+    this.buttons.KeyO = new Button(this, 'KeyO', 79, {
       en: {
         upperCase: 'O',
         lowerCase: 'o',
@@ -281,8 +272,8 @@ export default class Keyboard {
         upperCase: 'Щ',
         lowerCase: 'щ',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyP', 80, {
+    });
+    this.buttons.KeyP = new Button(this, 'KeyP', 80, {
       en: {
         upperCase: 'P',
         lowerCase: 'p',
@@ -291,8 +282,8 @@ export default class Keyboard {
         upperCase: 'З',
         lowerCase: 'з',
       },
-    }));
-    this.buttons.push(new Button(this, 'BracketLeft', 219, {
+    });
+    this.buttons.BracketLeft = new Button(this, 'BracketLeft', 219, {
       en: {
         upperCase: '{',
         lowerCase: '[',
@@ -301,8 +292,8 @@ export default class Keyboard {
         upperCase: 'Х',
         lowerCase: 'х',
       },
-    }));
-    this.buttons.push(new Button(this, 'BracketRight', 221, {
+    });
+    this.buttons.BracketRight = new Button(this, 'BracketRight', 221, {
       en: {
         upperCase: '}',
         lowerCase: ']',
@@ -311,8 +302,8 @@ export default class Keyboard {
         upperCase: 'Ъ',
         lowerCase: 'ъ',
       },
-    }));
-    this.buttons.push(new Button(this, 'Backslash', 220, {
+    });
+    this.buttons.Backslash = new Button(this, 'Backslash', 220, {
       en: {
         upperCase: '|',
         lowerCase: '\\',
@@ -321,8 +312,8 @@ export default class Keyboard {
         upperCase: '/',
         lowerCase: '\\',
       },
-    }));
-    this.buttons.push(new Button(this, 'Delete', 46, {
+    });
+    this.buttons.Delete = new Button(this, 'Delete', 46, {
       en: {
         upperCase: 'Del',
         lowerCase: 'Del',
@@ -331,11 +322,11 @@ export default class Keyboard {
         upperCase: 'Del',
         lowerCase: 'Del',
       },
-    }, 'special', 'delete'));
+    }, 'special', 'delete');
 
     this.keyboardElement.appendChild(br.cloneNode());
 
-    this.buttons.push(new Button(this, 'CapsLock', 20, {
+    this.buttons.CapsLock = new Button(this, 'CapsLock', 20, {
       en: {
         upperCase: 'CapsLock',
         lowerCase: 'CapsLock',
@@ -344,8 +335,8 @@ export default class Keyboard {
         upperCase: 'CapsLock',
         lowerCase: 'CapsLock',
       },
-    }, 'special', 'capslock'));
-    this.buttons.push(new Button(this, 'KeyA', 65, {
+    }, 'special', 'capslock');
+    this.buttons.KeyA = new Button(this, 'KeyA', 65, {
       en: {
         upperCase: 'A',
         lowerCase: 'a',
@@ -354,8 +345,8 @@ export default class Keyboard {
         upperCase: 'Ф',
         lowerCase: 'ф',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyS', 83, {
+    });
+    this.buttons.KeyS = new Button(this, 'KeyS', 83, {
       en: {
         upperCase: 'S',
         lowerCase: 's',
@@ -364,8 +355,8 @@ export default class Keyboard {
         upperCase: 'Ы',
         lowerCase: 'ы',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyD', 68, {
+    });
+    this.buttons.KeyD = new Button(this, 'KeyD', 68, {
       en: {
         upperCase: 'D',
         lowerCase: 'd',
@@ -374,8 +365,8 @@ export default class Keyboard {
         upperCase: 'В',
         lowerCase: 'в',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyF', 70, {
+    });
+    this.buttons.KeyF = new Button(this, 'KeyF', 70, {
       en: {
         upperCase: 'F',
         lowerCase: 'f',
@@ -384,8 +375,8 @@ export default class Keyboard {
         upperCase: 'А',
         lowerCase: 'а',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyG', 71, {
+    });
+    this.buttons.KeyG = new Button(this, 'KeyG', 71, {
       en: {
         upperCase: 'G',
         lowerCase: 'g',
@@ -394,8 +385,8 @@ export default class Keyboard {
         upperCase: 'П',
         lowerCase: 'п',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyH', 72, {
+    });
+    this.buttons.KeyH = new Button(this, 'KeyH', 72, {
       en: {
         upperCase: 'H',
         lowerCase: 'h',
@@ -404,8 +395,8 @@ export default class Keyboard {
         upperCase: 'Р',
         lowerCase: 'р',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyJ', 74, {
+    });
+    this.buttons.KeyJ = new Button(this, 'KeyJ', 74, {
       en: {
         upperCase: 'J',
         lowerCase: 'j',
@@ -414,8 +405,8 @@ export default class Keyboard {
         upperCase: 'О',
         lowerCase: 'о',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyK', 75, {
+    });
+    this.buttons.KeyK = new Button(this, 'KeyK', 75, {
       en: {
         upperCase: 'K',
         lowerCase: 'k',
@@ -424,8 +415,8 @@ export default class Keyboard {
         upperCase: 'Л',
         lowerCase: 'л',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyL', 76, {
+    });
+    this.buttons.KeyL = new Button(this, 'KeyL', 76, {
       en: {
         upperCase: 'L',
         lowerCase: 'l',
@@ -434,8 +425,8 @@ export default class Keyboard {
         upperCase: 'Д',
         lowerCase: 'д',
       },
-    }));
-    this.buttons.push(new Button(this, 'Semicolon', 186, {
+    });
+    this.buttons.Semicolon = new Button(this, 'Semicolon', 186, {
       en: {
         upperCase: ':',
         lowerCase: ';',
@@ -444,8 +435,8 @@ export default class Keyboard {
         upperCase: 'Ж',
         lowerCase: 'ж',
       },
-    }));
-    this.buttons.push(new Button(this, 'Quote', 222, {
+    });
+    this.buttons.Quote = new Button(this, 'Quote', 222, {
       en: {
         upperCase: '"',
         lowerCase: '\'',
@@ -454,8 +445,8 @@ export default class Keyboard {
         upperCase: 'Э',
         lowerCase: 'э',
       },
-    }));
-    this.buttons.push(new Button(this, 'Enter', 13, {
+    });
+    this.buttons.Enter = new Button(this, 'Enter', 13, {
       en: {
         upperCase: 'Enter',
         lowerCase: 'Enter',
@@ -464,11 +455,11 @@ export default class Keyboard {
         upperCase: 'Enter',
         lowerCase: 'Enter',
       },
-    }, 'special', 'enter'));
+    }, 'special', 'enter');
 
     this.keyboardElement.appendChild(br.cloneNode());
 
-    this.buttons.push(new Button(this, 'ShiftLeft', 16, {
+    this.buttons.ShiftLeft = new Button(this, 'ShiftLeft', 16, {
       en: {
         upperCase: 'Shift',
         lowerCase: 'Shift',
@@ -477,8 +468,8 @@ export default class Keyboard {
         upperCase: 'Shift',
         lowerCase: 'Shift',
       },
-    }, 'special', 'shift'));
-    this.buttons.push(new Button(this, 'KeyZ', 90, {
+    }, 'special', 'shift');
+    this.buttons.KeyZ = new Button(this, 'KeyZ', 90, {
       en: {
         upperCase: 'Z',
         lowerCase: 'z',
@@ -487,8 +478,8 @@ export default class Keyboard {
         upperCase: 'Я',
         lowerCase: 'я',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyX', 88, {
+    });
+    this.buttons.KeyX = new Button(this, 'KeyX', 88, {
       en: {
         upperCase: 'X',
         lowerCase: 'x',
@@ -497,8 +488,8 @@ export default class Keyboard {
         upperCase: 'Ч',
         lowerCase: 'ч',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyC', 67, {
+    });
+    this.buttons.KeyC = new Button(this, 'KeyC', 67, {
       en: {
         upperCase: 'C',
         lowerCase: 'c',
@@ -507,8 +498,8 @@ export default class Keyboard {
         upperCase: 'С',
         lowerCase: 'с',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyV', 86, {
+    });
+    this.buttons.KeyV = new Button(this, 'KeyV', 86, {
       en: {
         upperCase: 'V',
         lowerCase: 'v',
@@ -517,8 +508,8 @@ export default class Keyboard {
         upperCase: 'М',
         lowerCase: 'м',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyB', 66, {
+    });
+    this.buttons.KeyB = new Button(this, 'KeyB', 66, {
       en: {
         upperCase: 'B',
         lowerCase: 'b',
@@ -527,8 +518,8 @@ export default class Keyboard {
         upperCase: 'И',
         lowerCase: 'и',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyN', 78, {
+    });
+    this.buttons.KeyN = new Button(this, 'KeyN', 78, {
       en: {
         upperCase: 'N',
         lowerCase: 'n',
@@ -537,8 +528,8 @@ export default class Keyboard {
         upperCase: 'Т',
         lowerCase: 'т',
       },
-    }));
-    this.buttons.push(new Button(this, 'KeyM', 77, {
+    });
+    this.buttons.KeyM = new Button(this, 'KeyM', 77, {
       en: {
         upperCase: 'M',
         lowerCase: 'm',
@@ -547,8 +538,8 @@ export default class Keyboard {
         upperCase: 'Ь',
         lowerCase: 'ь',
       },
-    }));
-    this.buttons.push(new Button(this, 'Comma', 188, {
+    });
+    this.buttons.Comma = new Button(this, 'Comma', 188, {
       en: {
         upperCase: '<',
         lowerCase: ',',
@@ -557,8 +548,8 @@ export default class Keyboard {
         upperCase: 'Б',
         lowerCase: 'б',
       },
-    }));
-    this.buttons.push(new Button(this, 'Period', 190, {
+    });
+    this.buttons.Period = new Button(this, 'Period', 190, {
       en: {
         upperCase: '>',
         lowerCase: '.',
@@ -567,8 +558,8 @@ export default class Keyboard {
         upperCase: 'Ю',
         lowerCase: 'ю',
       },
-    }));
-    this.buttons.push(new Button(this, 'Slash', 191, {
+    });
+    this.buttons.Slash = new Button(this, 'Slash', 191, {
       en: {
         upperCase: '?',
         lowerCase: '/',
@@ -577,8 +568,8 @@ export default class Keyboard {
         upperCase: ',',
         lowerCase: '.',
       },
-    }));
-    this.buttons.push(new Button(this, 'ArrowUp', 38, {
+    });
+    this.buttons.ArrowUp = new Button(this, 'ArrowUp', 38, {
       en: {
         upperCase: '↑',
         lowerCase: '↑',
@@ -587,8 +578,8 @@ export default class Keyboard {
         upperCase: '↑',
         lowerCase: '↑',
       },
-    }, 'special', 'arrow'));
-    this.buttons.push(new Button(this, 'ShiftRight', 16, {
+    }, 'special', 'arrow');
+    this.buttons.ShiftRight = new Button(this, 'ShiftRight', 16, {
       en: {
         upperCase: 'Shift',
         lowerCase: 'Shift',
@@ -597,12 +588,12 @@ export default class Keyboard {
         upperCase: 'Shift',
         lowerCase: 'Shift',
       },
-    }, 'special', 'shift'));
+    }, 'special', 'shift');
 
     this.keyboardElement.appendChild(br);
 
 
-    this.buttons.push(new Button(this, 'ControlLeft', 17, {
+    this.buttons.ControlLeft = new Button(this, 'ControlLeft', 17, {
       en: {
         upperCase: 'Ctrl',
         lowerCase: 'Ctrl',
@@ -611,8 +602,8 @@ export default class Keyboard {
         upperCase: 'Ctrl',
         lowerCase: 'Ctrl',
       },
-    }, 'special', 'control'));
-    this.buttons.push(new Button(this, 'MetaLeft', 91, {
+    }, 'special', 'control');
+    this.buttons.MetaLeft = new Button(this, 'MetaLeft', 91, {
       en: {
         upperCase: 'Win',
         lowerCase: 'Win',
@@ -621,8 +612,8 @@ export default class Keyboard {
         upperCase: 'Win',
         lowerCase: 'Win',
       },
-    }, 'special', 'win'));
-    this.buttons.push(new Button(this, 'AltLeft', 18, {
+    }, 'special', 'win');
+    this.buttons.AltLeft = new Button(this, 'AltLeft', 18, {
       en: {
         upperCase: 'Alt',
         lowerCase: 'Alt',
@@ -631,8 +622,8 @@ export default class Keyboard {
         upperCase: 'Alt',
         lowerCase: 'Alt',
       },
-    }, 'special', 'alt'));
-    this.buttons.push(new Button(this, 'Space', 32, {
+    }, 'special', 'alt');
+    this.buttons.Space = new Button(this, 'Space', 32, {
       en: {
         upperCase: ' ',
         lowerCase: ' ',
@@ -641,8 +632,8 @@ export default class Keyboard {
         upperCase: ' ',
         lowerCase: ' ',
       },
-    }, 'space'));
-    this.buttons.push(new Button(this, 'AltRight', 18, {
+    }, 'space');
+    this.buttons.AltRight = new Button(this, 'AltRight', 18, {
       en: {
         upperCase: 'Alt',
         lowerCase: 'Alt',
@@ -651,8 +642,8 @@ export default class Keyboard {
         upperCase: 'Alt',
         lowerCase: 'Alt',
       },
-    }, 'special', 'alt'));
-    this.buttons.push(new Button(this, 'ControlRight', 17, {
+    }, 'special', 'alt');
+    this.buttons.ControlRight = new Button(this, 'ControlRight', 17, {
       en: {
         upperCase: 'Ctrl',
         lowerCase: 'Ctrl',
@@ -661,8 +652,8 @@ export default class Keyboard {
         upperCase: 'Ctrl',
         lowerCase: 'Ctrl',
       },
-    }, 'special', 'control'));
-    this.buttons.push(new Button(this, 'ArrowLeft', 37, {
+    }, 'special', 'control');
+    this.buttons.ArrowLeft = new Button(this, 'ArrowLeft', 37, {
       en: {
         upperCase: '←',
         lowerCase: '←',
@@ -671,8 +662,8 @@ export default class Keyboard {
         upperCase: '←',
         lowerCase: '←',
       },
-    }, 'special', 'arrow'));
-    this.buttons.push(new Button(this, 'ArrowDown', 40, {
+    }, 'special', 'arrow');
+    this.buttons.ArrowDown = new Button(this, 'ArrowDown', 40, {
       en: {
         lowerCase: '↓',
         upperCase: '↓',
@@ -681,8 +672,8 @@ export default class Keyboard {
         upperCase: '↓',
         lowerCase: '↓',
       },
-    }, 'special', 'arrow'));
-    this.buttons.push(new Button(this, 'ArrowRight', 39, {
+    }, 'special', 'arrow');
+    this.buttons.ArrowRight = new Button(this, 'ArrowRight', 39, {
       en: {
         lowerCase: '→',
         upperCase: '→',
@@ -691,34 +682,40 @@ export default class Keyboard {
         upperCase: '→',
         lowerCase: '→',
       },
-    }, 'special', 'arrow'));
-
-    this.textarea.addEventListener('keydown', (event) => {
-      event.preventDefault();
-    });
-
-    
+    }, 'special', 'arrow');
 
     window.addEventListener('keydown', this.onKeyDown.bind(this));
     window.addEventListener('keyup', this.onKeyUp.bind(this));
+    this.keyboardElement.addEventListener('mousedown', this.onMouseDown.bind(this));
+    this.keyboardElement.addEventListener('mouseup', this.onMouseUp.bind(this));
     window.addEventListener('click', () => this.textarea.focus());
   }
 
-  pressCapsLock() {
+  setTextarea(textarea) {
+    this.textarea = textarea;
+  }
+
+  pressedCapsLock() {
     this.isCaps = !this.isCaps;
     if (this.isCaps) {
-      this.buttons.forEach((button) => {
+      Object.values(this.buttons).forEach((btn) => {
+        const button = btn;
         if (!button.elementInHtml.classList.contains('special')) {
-          button.dict[this.lang].lowerCase = button.dict[this.lang].lowerCase.toUpperCase();
-          button.dict[this.lang].upperCase = button.dict[this.lang].upperCase.toLowerCase();
+          Object.keys(button.dict).forEach((keyLang) => {
+            button.dict[keyLang].lowerCase = button.dict[keyLang].lowerCase.toUpperCase();
+            button.dict[keyLang].upperCase = button.dict[keyLang].upperCase.toLowerCase();
+          });
           button.update();
         }
       });
     } else {
-      this.buttons.forEach((button) => {
+      Object.values(this.buttons).forEach((btn) => {
+        const button = btn;
         if (!button.elementInHtml.classList.contains('special')) {
-          button.dict[this.lang].lowerCase = button.dict[this.lang].lowerCase.toLowerCase();
-          button.dict[this.lang].upperCase = button.dict[this.lang].upperCase.toUpperCase();
+          Object.keys(button.dict).forEach((keyLang) => {
+            button.dict[keyLang].lowerCase = button.dict[keyLang].lowerCase.toLowerCase();
+            button.dict[keyLang].upperCase = button.dict[keyLang].upperCase.toUpperCase();
+          });
           button.update();
         }
       });
@@ -726,27 +723,77 @@ export default class Keyboard {
   }
 
   onKeyDown(event) {
-    this.buttons.forEach((button) => {
-      if (button.code === event.code) {
-        button.onMouseDown();
-      }
-    });
     event.preventDefault();
+    if (this.buttons[event.code]) this.buttons[event.code].onMouseDown();
   }
 
   onKeyUp(event) {
-    this.buttons.forEach((button) => {
-      if (event.code === button.code) {
-        button.onMouseUp();
-      }
-    });
     event.preventDefault();
+    if (this.buttons[event.code]) this.buttons[event.code].onMouseUp();
+  }
+
+  onMouseDown(event) {
+    if (event.target.classList.contains('keyboard')) return;
+    this.buttons[event.target.id].onMouseDown();
+  }
+
+  onMouseUp(event) {
+    if (event.target.classList.contains('keyboard')) return;
+    this.buttons[event.target.id].onMouseUp();
   }
 
   updateButtons() {
-    this.buttons.forEach((button) => {
+    Object.values(this.buttons).forEach((button) => {
       button.update();
     });
+  }
+
+  printText(text) {
+    const start = this.textarea.selectionStart;
+    const end = this.textarea.selectionEnd;
+    this.textarea.value = this.textarea.value.slice(0, start) + text
+                        + this.textarea.value.slice(end);
+    this.textarea.selectionStart = start + 1;
+    this.textarea.selectionEnd = start + 1;
+  }
+
+  pressedBackspace() {
+    const start = this.textarea.selectionStart;
+    const end = this.textarea.selectionEnd;
+    const { value } = this.textarea;
+    if (end - start > 0) {
+      this.textarea.value = value.slice(0, start)
+                          + value.slice(end);
+      this.textarea.selectionStart = start;
+      this.textarea.selectionEnd = start;
+    } else if (this.specialKeysPressed.indexOf('Control') !== -1) {
+      let newStart = value.lastIndexOf(' ', start);
+      newStart = (newStart === -1) ? 0 : newStart;
+      this.textarea.value = value.slice(0, newStart)
+                      + value.slice(end);
+      this.textarea.selectionStart = newStart;
+      this.textarea.selectionEnd = newStart;
+    } else if (start > 0) {
+      this.textarea.value = value.slice(0, start - 1)
+                      + value.slice(end);
+      this.textarea.selectionStart = start - 1;
+      this.textarea.selectionEnd = start - 1;
+    }
+  }
+
+  pressedDel() {
+    const start = this.textarea.selectionStart;
+    const end = this.textarea.selectionEnd;
+    const { value } = this.textarea;
+    if (end - start > 0) {
+      this.textarea.value = value.slice(0, start)
+                          + value.slice(end);
+    } else if (end < value.length) {
+      this.textarea.value = value.slice(0, start)
+                      + value.slice(end + 1);
+    }
+    this.textarea.selectionStart = start;
+    this.textarea.selectionEnd = start;
   }
 
   changeLanguage() {
