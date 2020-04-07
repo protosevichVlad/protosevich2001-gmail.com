@@ -1,1 +1,1 @@
-## [Link](https://protosevichvlad.github.io/virtual-keyboard/)
+## [Deploy](https://protosevichvlad.github.io/virtual-keyboard/)
